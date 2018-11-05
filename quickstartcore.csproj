@@ -27,4 +27,7 @@
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\Recipe.cs" />
+  </ItemGroup>
 </Project>
