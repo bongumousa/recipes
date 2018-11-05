@@ -1,0 +1,22 @@
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/bin/Debug/netcoreapp2.0/quickstartcore.deps.json
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/bin/Debug/netcoreapp2.0/quickstartcore.runtimeconfig.json
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/bin/Debug/netcoreapp2.0/quickstartcore.runtimeconfig.dev.json
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/bin/Debug/netcoreapp2.0/quickstartcore.dll
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/bin/Debug/netcoreapp2.0/quickstartcore.pdb
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/obj/Debug/netcoreapp2.0/quickstartcore.csprojAssemblyReference.cache
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/obj/Debug/netcoreapp2.0/quickstartcore.csproj.CoreCompileInputs.cache
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/obj/Debug/netcoreapp2.0/quickstartcore.AssemblyInfoInputs.cache
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/obj/Debug/netcoreapp2.0/quickstartcore.AssemblyInfo.cs
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/obj/Debug/netcoreapp2.0/quickstartcore.dll
+/Users/absolom/Documents/development/dot-net/quickstartcore 2/obj/Debug/netcoreapp2.0/quickstartcore.pdb
+/Users/absolom/Documents/development/dot-net/recipes/bin/Debug/netcoreapp2.0/quickstartcore.deps.json
+/Users/absolom/Documents/development/dot-net/recipes/bin/Debug/netcoreapp2.0/quickstartcore.runtimeconfig.json
+/Users/absolom/Documents/development/dot-net/recipes/bin/Debug/netcoreapp2.0/quickstartcore.runtimeconfig.dev.json
+/Users/absolom/Documents/development/dot-net/recipes/bin/Debug/netcoreapp2.0/quickstartcore.dll
+/Users/absolom/Documents/development/dot-net/recipes/bin/Debug/netcoreapp2.0/quickstartcore.pdb
+/Users/absolom/Documents/development/dot-net/recipes/obj/Debug/netcoreapp2.0/quickstartcore.csprojAssemblyReference.cache
+/Users/absolom/Documents/development/dot-net/recipes/obj/Debug/netcoreapp2.0/quickstartcore.csproj.CoreCompileInputs.cache
+/Users/absolom/Documents/development/dot-net/recipes/obj/Debug/netcoreapp2.0/quickstartcore.AssemblyInfoInputs.cache
+/Users/absolom/Documents/development/dot-net/recipes/obj/Debug/netcoreapp2.0/quickstartcore.AssemblyInfo.cs
+/Users/absolom/Documents/development/dot-net/recipes/obj/Debug/netcoreapp2.0/quickstartcore.dll
+/Users/absolom/Documents/development/dot-net/recipes/obj/Debug/netcoreapp2.0/quickstartcore.pdb
