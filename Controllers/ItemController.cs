@@ -2,8 +2,12 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
     using Models;
 
+
+    [Produces("application/json")]
+    [Route("api/[controller]")] 
     public class ItemController : Controller
     {
         private readonly IDocumentDBRepository<todo.Models.Item> Respository;
@@ -11,27 +15,28 @@
         {
             this.Respository = Respository;
         }
-
-        [ActionName("Index")]
-        public async Task<IActionResult> Index()
+ 
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             var items = await Respository.GetItemsAsync(d => !d.Completed);
-            return View(items);
+            if(items == null){
+                return NotFound();
+            }
+            return Ok(items);
         }
         
 
-#pragma warning disable 1998
-        [ActionName("Create")]
+#pragma warning disable 1998 
+        [HttpPost]
         public async Task<IActionResult> CreateAsync()
         {
             return View();
         }
 #pragma warning restore 1998
 
-        [HttpPost]
-        [ActionName("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync([Bind("Id,Title,Description,Note,Completed")] Item item)
+        [HttpPost] 
+        public async Task<ActionResult> CreateAsync([Bind("Id,Title,Description,Note,Completed")] [FromBody] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -39,25 +44,22 @@
                 return RedirectToAction("Index");
             }
 
-            return View(item);
+            return Ok(item);
         }
 
-        [HttpPost]
-        [ActionName("Edit")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync([Bind("Id,Title,Description,Note,Completed")] Item item)
+        [HttpPut] 
+        public async Task<ActionResult> EditAsync([Bind("Id,Title,Description,Note,Completed")] [FromBody] Item item)
         {
             if (ModelState.IsValid)
             {
-                await Respository.UpdateItemAsync(item.Id, item);
-                return RedirectToAction("Index");
+                await Respository.UpdateItemAsync(item.Id, item); 
             }
 
-            return View(item);
+            return Ok(item);
         }
-
-        [ActionName("Edit")]
-        public async Task<ActionResult> EditAsync(string id)
+ 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditAsync([FromRoute] string id)
         {
             if (id == null)
             {
@@ -70,11 +72,11 @@
                 return NotFound();
             }
 
-            return View(item);
+            return Ok(item);
         }
-
-        [ActionName("Delete")]
-        public async Task<ActionResult> DeleteAsync(string id)
+ 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync([FromRoute] string id)
         {
             if (id == null)
             {
@@ -87,23 +89,14 @@
                 return NotFound();
             }
 
-            return View(item);
-        }
+            return Ok(item);
+        } 
 
-        [HttpPost]
-        [ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmedAsync([Bind("Id")] string id)
-        {
-            await Respository.DeleteItemAsync(id);
-            return RedirectToAction("Index");
-        }
-
-        [ActionName("Details")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> DetailsAsync(string id)
         {
             Item item = await Respository.GetItemAsync(id);
-            return View(item);
+            return Ok(item);
         }
     }
 }
