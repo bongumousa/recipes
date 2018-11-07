@@ -1,18 +1,17 @@
-﻿namespace todo
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Documents;
-    using Microsoft.Azure.Documents.Client;
-    using Microsoft.Azure.Documents.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
 
-    
+namespace recipes
+{
     public class DocumentDBRepository<T> : IDocumentDBRepository<T> where T : class
     {
-       
+
         private readonly string Endpoint = "https://103eade7-0ee0-4-231-b9ee.documents.azure.com:443/";
         private readonly string Key = "FPIVs6NQsMM2W4uPC9Y3uhLsqAJo7KvEZvLrQ3NWLXp868Tv2nuvlGEAkFbQSwvQsGtTi4IGWqAqeI8lQuLnBg==";
         private readonly string DatabaseId = "ToDoList";
