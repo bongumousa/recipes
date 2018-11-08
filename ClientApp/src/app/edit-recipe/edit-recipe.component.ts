@@ -29,6 +29,9 @@ export class EditRecipeComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * construct a form
+   */
   constructForm(): void {
     this.editForm = this.formBuilder.group({
       title: [this.recipe.title, Validators.required ],
