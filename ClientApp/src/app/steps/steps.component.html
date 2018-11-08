@@ -1,0 +1,15 @@
+<p *ngIf="!recipe"><em>Loading...</em></p>
+
+<div class="container" *ngIf="recipe">
+
+  <h1>{{recipe.title}} steps</h1>
+
+  <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        Featured
+      </div>
+      <ul *ngFor="let step of recipe.steps" class="list-group list-group-flush">
+        <li class="list-group-item">{{step.step}}</li>
+      </ul>
+    </div>
+</div>

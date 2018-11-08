@@ -12,7 +12,7 @@ namespace recipes.Models
         public string Title { get; set; }
 
         [JsonProperty(PropertyName = "steps")]
-        public List<string> Steps { get; set; }
+        public List<Step> Steps { get; set; }
 
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

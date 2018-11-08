@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -8,7 +9,7 @@ import { RecipeService } from '../services/recipe.service';
 })
 export class RecipesComponent implements OnInit {
   public recipes: Recipe[] = [];
-  constructor(@Inject('BASE_URL') baseUrl: string, recipeService: RecipeService) {
+  constructor(@Inject('BASE_URL') baseUrl: string, recipeService: RecipeService, private route: Router) {
     recipeService.getAll(baseUrl).subscribe((result: Recipe[]) => {
       this.recipes = result;
     }, error => console.error());
@@ -16,12 +17,25 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  viewSteps(id: string): void {
+    this.route.navigate(['/steps', id]);
+  }
+
+  edit(id: string): void {
+    console.log('id ', id );
+    this.route.navigate(['/edit', id]);
+  }
 }
-interface Recipe {
+export interface Recipe {
   id: string;
   title: string;
   description: string;
   note: string;
-  // steps: [];
+  steps: [Step];
   isComplete: boolean;
+}
+
+export interface Step {
+  step: string;
 }
