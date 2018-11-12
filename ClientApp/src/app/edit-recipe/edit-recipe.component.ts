@@ -56,8 +56,6 @@ export class EditRecipeComponent implements OnInit {
   }
 
   addStep() {
-    console.log('this.steps', this.steps);
-    console.log('this.editForm.value.currentStep ', this.editForm.value.currentStep );
     if (!this.steps) {
       this.steps = [new Step];
     }

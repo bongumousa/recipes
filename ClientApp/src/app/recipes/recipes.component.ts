@@ -34,13 +34,11 @@ export class RecipesComponent implements OnInit {
    */
   viewSteps(title: string, steps: [Step], template: TemplateRef<any>): void {
     this.steps = steps;
-    console.log('this.steps', this.steps);
     this.title = title;
     this.openModal(template);
   }
 
   edit(id: string): void {
-    console.log('id ', id );
     this.router.navigate(['/edit', id]);
   }
 
@@ -52,9 +50,7 @@ export class RecipesComponent implements OnInit {
       this.show_content = false;
       this.recipeService.delete(getBaseUrl(), id).subscribe(results => {
         console.log('results', results);
-        // location.reload();
         this.show_content = true;
-        // this.router.navigate(['/recipes']);
       }, error =>  console.error());
   }
 
