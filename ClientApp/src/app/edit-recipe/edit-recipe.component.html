@@ -9,5 +9,25 @@
       <label for="exampleFormControlTextarea1"></label>
     <textarea class="form-control" formControlName="note" id="exampleFormControlTextarea1" rows="3" placeholder="Add a note"></textarea>
     </div>
-        <button class="btn btn-primary" type="submit">Register</button>
+    <div class="container">
+        <div class="row">
+          <div class="col">
+              <input type="text" class="form-control" id="txstep" placeholder="add a step"  formControlName="currentStep" >
+          </div>
+          <div class="col">
+              <button class="btn btn-primary mb-2" (click)="addStep(); submitting=false">Add</button>
+          </div>
+        </div>
+      </div>
+      <div>steps </div>
+      <ul *ngFor="let step of steps">
+          <li>
+            {{step.step}}
+          </li>
+        </ul>
+      <button class="btn btn-primary" type="submit" (click)="submitting=true">Save</button>
   </form>
+
+
+
+

@@ -13,7 +13,7 @@ import { RecipeService } from './services/recipe.service';
 import { RecipesComponent } from './recipes/recipes.component';
 import { StepsComponent } from './steps/steps.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
-
+import { ModalModule, BsModalService } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,8 +30,9 @@ import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ModalModule.forRoot(),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: RecipesComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'recipes', component: RecipesComponent },
@@ -40,7 +41,7 @@ import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
     ]),
     ReactiveFormsModule
   ],
-  providers: [RecipeService],
+  providers: [RecipeService, BsModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, TemplateRef } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { getBaseUrl } from '../../main';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-recipes',
@@ -9,7 +11,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RecipesComponent implements OnInit {
   public recipes: Recipe[] = [];
-  constructor(@Inject('BASE_URL') baseUrl: string, recipeService: RecipeService, private route: Router) {
+  public show_content = true;
+  public modalRef: BsModalRef;
+  public message: string;
+  public steps: [Step];
+  public items: any[];
+  public title: string;
+
+  constructor(@Inject('BASE_URL') baseUrl: string, private recipeService: RecipeService, private router: Router,
+  private modalService: BsModalService) {
+    this.items = Array(15).fill(0);
     recipeService.getAll(baseUrl).subscribe((result: Recipe[]) => {
       this.recipes = result;
     }, error => console.error());
@@ -18,24 +29,77 @@ export class RecipesComponent implements OnInit {
   ngOnInit() {
   }
 
-  viewSteps(id: string): void {
-    this.route.navigate(['/steps', id]);
+  /**
+   * view steps of a recipe
+   */
+  viewSteps(title: string, steps: [Step], template: TemplateRef<any>): void {
+    this.steps = steps;
+    console.log('this.steps', this.steps);
+    this.title = title;
+    this.openModal(template);
   }
 
   edit(id: string): void {
     console.log('id ', id );
-    this.route.navigate(['/edit', id]);
+    this.router.navigate(['/edit', id]);
+  }
+
+  /**
+   * removes recipe
+   * @param id
+   */
+  delete(id: string) {
+      this.show_content = false;
+      this.recipeService.delete(getBaseUrl(), id).subscribe(results => {
+        console.log('results', results);
+        // location.reload();
+        this.show_content = true;
+        // this.router.navigate(['/recipes']);
+      }, error =>  console.error());
+  }
+
+  /**
+   * adds new record
+   */
+  add() {
+    this.router.navigate(['/edit', '0']);
+  }
+
+  close(): void {
+    this.modalRef.hide();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }
-export interface Recipe {
+
+export class Recipe {
   id: string;
   title: string;
   description: string;
   note: string;
   steps: [Step];
   isComplete: boolean;
+
+  constructor() {
+    return {
+      id: '0',
+      title:  '',
+      description: '',
+      note: '',
+      steps: [new Step],
+      isComplete: false
+    };
+  }
 }
 
-export interface Step {
+export class Step {
   step: string;
+  constructor() {
+    return {
+      step: ''
+      };
+  }
 }
+

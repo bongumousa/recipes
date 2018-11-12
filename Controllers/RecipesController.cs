@@ -27,14 +27,7 @@
             }
             return Ok(items);
         }
-
-
-#pragma warning disable 1998
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync()
-        {
-            return View();
-        }
+ 
 #pragma warning restore 1998
 
         [HttpPost]
@@ -42,8 +35,9 @@
         {
             if (ModelState.IsValid)
             {
-                await Respository.CreateItemAsync(item);
-                return RedirectToAction("Index");
+                Microsoft.Azure.Documents.Document added = await Respository.CreateItemAsync(item);
+                Ok(added);
+             //return RedirectToAction("Index");
             }
 
             return Ok(item);
@@ -85,13 +79,9 @@
                 return BadRequest();
             }
 
-            Recipe item = await Respository.GetItemAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            await Respository.DeleteItemAsync(id);
 
-            return Ok(item);
+            return Ok();
         }
 
         [HttpGet("{id}")]

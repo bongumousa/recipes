@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Recipe, Step } from '../recipes/recipes.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../services/recipe.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { getBaseUrl } from '../../main';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -13,17 +14,29 @@ export class EditRecipeComponent implements OnInit {
   editForm: FormGroup;
   public id: string;
   public recipe: Recipe;
-  public steps: [Step];
+  public currentStep: string;
+  public submitting: boolean;
+  public steps: [Step] = [new Step];
 
-  constructor(@Inject('BASE_URL') baseUrl: string, route: ActivatedRoute, recipeService: RecipeService,
-   private formBuilder: FormBuilder ) {
+
+  constructor(@Inject('BASE_URL') baseUrl: string, route: ActivatedRoute, private recipeService: RecipeService,
+   private formBuilder: FormBuilder, private router: Router ) {
     route.params.subscribe(params => {
       this.id = params['id'];
-      recipeService.get(baseUrl, this.id).subscribe((result: Recipe) => {
-          this.recipe = result;
-          this.constructForm();
+
+      if (this.id === '0') {
+            this.recipe = new Recipe();
+            this.constructForm();
+      } else {
+          recipeService.get(baseUrl, this.id).subscribe((result: Recipe) => {
+              this.recipe = result;
+              if (this.recipe.steps) {
+                this.steps = this.recipe.steps;
+              }
+              this.constructForm();
+          }, error => console.error());
+        }
       });
-    }, error => console.error());
   }
 
   ngOnInit() {
@@ -34,23 +47,53 @@ export class EditRecipeComponent implements OnInit {
    */
   constructForm(): void {
     this.editForm = this.formBuilder.group({
+      id: [this.recipe.id],
       title: [this.recipe.title, Validators.required ],
       description: [this.recipe.description, Validators.required],
-      note: [this.recipe.note]
+      note: [this.recipe.note],
+      currentStep: [this.currentStep]
     });
   }
 
+  addStep() {
+    console.log('this.steps', this.steps);
+    console.log('this.editForm.value.currentStep ', this.editForm.value.currentStep );
+    if (!this.steps) {
+      this.steps = [new Step];
+    }
+    if (this.editForm.value.currentStep !== '' && this.editForm.value.currentStep !== undefined) {
+        const step = new Step();
+        step.step = this.editForm.value.currentStep;
+        this.steps.push(step);
+    }
+    this.currentStep = '';
+  }
   /**
    *
    * submits a form with VALID values
    */
   onSubmit(): void {
-    if (this.editForm.valid) {
-      console.log('==== valid form', this.editForm.value);
-      console.log('valid form', this.editForm);
+    this.recipe = <Recipe> this.editForm.value;
+    this.recipe.steps = this.steps;
+    if (this.editForm.valid && this.submitting) {
+
+      if (this.recipe.id === '0') {
+        this.recipe.id = null;
+        this.recipeService.add(getBaseUrl(), this.recipe).subscribe(result => {
+        this.router.navigate(['/recipes']);
+      }, error => console.error(error));
+
+      } else {
+        this.recipeService.update(getBaseUrl(), this.recipe).subscribe(result => {
+          console.log('result', resizeTo);
+      }, error => console.error(error));
+      }
     } else {
       console.log('not a valid form', this.editForm);
     }
+    this.submitting = false;
   }
+
+
 
 }
